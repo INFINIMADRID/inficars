@@ -13,7 +13,7 @@ const COCHES = [
     "cambio": "Automático",
     "potencia": "190 CV",
     "foto": "fotos/bmw-320d.jpg",
-    "vendido": false,
+    "vendido": true,
     "id": "bmw-serie-3-320d-2019-78000"
   },
   {
