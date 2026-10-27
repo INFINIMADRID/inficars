@@ -13,19 +13,8 @@ const COCHES = [
     "cambio": "Automático",
     "potencia": "190 CV",
     "foto": "fotos/bmw-320d.jpg",
-    "vendido": false
-  },
-  {
-    "marca": "Audi",
-    "modelo": "A3 Sportback 35 TFSI",
-    "anio": 2021,
-    "km": 42000,
-    "precio": 26500,
-    "combustible": "Gasolina",
-    "cambio": "Automático",
-    "potencia": "150 CV",
-    "foto": "fotos/audi-a3.jpg",
-    "vendido": false
+    "vendido": false,
+    "id": "bmw-serie-3-320d-2019-78000"
   },
   {
     "marca": "Tesla",
@@ -37,6 +26,7 @@ const COCHES = [
     "cambio": "Automático",
     "potencia": "351 CV",
     "foto": "fotos/tesla-model3.jpg",
-    "vendido": false
+    "vendido": false,
+    "id": "tesla-model-3-long-range-2022-35000"
   }
 ];
