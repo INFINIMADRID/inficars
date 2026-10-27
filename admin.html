@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Panel | INFICARS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .adm{width:min(1100px,92%);margin:0 auto;padding:28px 0 80px}
+  .adm-top{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:30px}
+  .adm-top .acciones{display:flex;gap:10px;flex-wrap:wrap}
+  .btn-peq{padding:10px 20px;font-size:.85rem}
+  .card{background:var(--panel);border:1px solid rgba(255,255,255,.08);border-radius:var(--radio);padding:30px;margin-bottom:28px}
+  .card h2{font-family:'Orbitron',sans-serif;font-size:1.25rem;margin-bottom:6px}
+  .card > p.sub{color:var(--suave);font-size:.9rem;margin-bottom:22px}
+  .campos{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .campos .full{grid-column:1/-1}
+  .campo label{display:block;font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--suave);margin-bottom:6px}
+  .campo input,.campo select{width:100%;background:var(--fondo);border:1px solid rgba(255,255,255,.12);color:#fff;padding:13px 16px;border-radius:12px;font-family:inherit;font-size:.95rem;outline:none}
+  .campo input:focus,.campo select:focus{border-color:var(--rojo)}
+  .campo input[type=file]{padding:10px}
+  .preview{margin-top:12px;max-width:260px;border-radius:12px;display:none}
+  .check{display:flex;align-items:center;gap:10px;color:var(--texto);font-size:.95rem}
+  .check input{width:auto}
+  .barra{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px;align-items:center}
+  .estado{margin-top:16px;padding:12px 16px;border-radius:12px;font-size:.9rem;display:none}
+  .estado.ok{display:block;background:rgba(40,167,69,.12);border:1px solid rgba(40,167,69,.5);color:#8be3a0}
+  .estado.err{display:block;background:rgba(225,6,0,.12);border:1px solid rgba(225,6,0,.5);color:#ff8f8a}
+  .estado.info{display:block;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:var(--texto)}
+  .lista{display:flex;flex-direction:column;gap:14px}
+  .fila{display:grid;grid-template-columns:110px 1fr auto;gap:16px;align-items:center;background:var(--panel2);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:12px}
+  .fila .mini{width:110px;aspect-ratio:16/10;border-radius:10px;background:#0c0c0f;object-fit:cover;display:block}
+  .fila h3{font-size:1rem}
+  .fila .meta{color:var(--suave);font-size:.82rem}
+  .etq{display:inline-block;background:var(--rojo);border-radius:50px;font-size:.68rem;padding:2px 10px;margin-left:8px;font-weight:700;letter-spacing:1px;vertical-align:middle}
+  .fila .botones{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+  .fila .botones button{padding:8px 14px;font-size:.78rem}
+  .peligro{border-color:rgba(225,6,0,.5) !important;color:#ff8f8a !important}
+  .peligro:hover{background:var(--rojo) !important;color:#fff !important}
+  .ayuda{color:var(--suave);font-size:.85rem;line-height:1.7}
+  .ayuda b{color:var(--texto)}
+  @media(max-width:700px){
+    .campos{grid-template-columns:1fr}
+    .fila{grid-template-columns:90px 1fr}
+    .fila .botones{grid-column:1/-1;justify-content:flex-start}
+    .fila .mini{width:90px}
+    .card{padding:22px}
+  }
+</style>
+</head>
+<body>
+<div class="adm">
+
+  <div class="adm-top">
+    <div class="logo"><span class="txt"><span class="infi">INFI</span><span class="cars">CARS</span></span><span style="font-size:.85rem;color:var(--suave);font-family:'Inter',sans-serif;font-weight:500;letter-spacing:1px;margin-left:6px">PANEL</span></div>
+    <div class="acciones">
+      <a class="btn btn-borde btn-peq" href="coches.html" target="_blank" rel="noopener">Ver la web</a>
+      <button class="btn btn-borde btn-peq" id="btnSalir" type="button" style="display:none">Salir</button>
+    </div>
+  </div>
+
+  <!-- CONEXIÓN -->
+  <div class="card" id="vistaConexion">
+    <h2>Conectar con tu web</h2>
+    <p class="sub">Solo hay que hacerlo una vez en cada dispositivo. Los datos se guardan en este navegador.</p>
+    <div class="campos">
+      <div class="campo full">
+        <label for="cRepo">Repositorio de GitHub (usuario/nombre)</label>
+        <input id="cRepo" type="text" placeholder="tuusuario/inficars" autocomplete="off" autocapitalize="off">
+      </div>
+      <div class="campo">
+        <label for="cRama">Rama</label>
+        <input id="cRama" type="text" value="main" autocomplete="off" autocapitalize="off">
+      </div>
+      <div class="campo">
+        <label for="cToken">Token de acceso</label>
+        <input id="cToken" type="password" placeholder="github_pat_..." autocomplete="off">
+      </div>
+    </div>
+    <div class="barra"><button class="btn btn-rojo" id="btnConectar" type="button">Conectar</button></div>
+    <div class="estado" id="estadoConexion"></div>
+    <p class="ayuda" style="margin-top:22px">
+      <b>Cómo conseguir el token:</b> en GitHub ve a <i>Settings, Developer settings, Personal access tokens, Fine-grained tokens</i> y crea uno
+      con acceso <b>solo a este repositorio</b> y el permiso <b>Contents: Read and write</b>. Guárdalo como una contraseña: quien lo tenga puede publicar en tu web.
+    </p>
+  </div>
+
+  <!-- PANEL -->
+  <div id="vistaPanel" style="display:none">
+
+    <div class="card">
+      <h2 id="tituloForm">Añadir un coche</h2>
+      <p class="sub">Rellena los datos, elige la foto y pulsa Publicar. La web se actualiza sola en uno o dos minutos.</p>
+      <form id="formCoche" class="campos" autocomplete="off" style="display:grid">
+        <div class="campo"><label for="fMarca">Marca</label><input id="fMarca" required placeholder="Seat"></div>
+        <div class="campo"><label for="fModelo">Modelo</label><input id="fModelo" required placeholder="León 1.5 TSI FR"></div>
+        <div class="campo"><label for="fAnio">Año</label><input id="fAnio" type="number" inputmode="numeric" min="1950" max="2100" required placeholder="2020"></div>
+        <div class="campo"><label for="fKm">Kilómetros</label><input id="fKm" type="number" inputmode="numeric" min="0" required placeholder="61000"></div>
+        <div class="campo"><label for="fPrecio">Precio (euros)</label><input id="fPrecio" type="number" inputmode="numeric" min="0" required placeholder="18900"></div>
+        <div class="campo"><label for="fPot">Potencia</label><input id="fPot" required placeholder="130 CV"></div>
+        <div class="campo"><label for="fComb">Combustible</label>
+          <select id="fComb"><option>Gasolina</option><option>Diésel</option><option>Híbrido</option><option>Eléctrico</option></select></div>
+        <div class="campo"><label for="fCambio">Cambio</label>
+          <select id="fCambio"><option>Manual</option><option>Automático</option></select></div>
+        <div class="campo full">
+          <label for="fFoto">Foto principal</label>
+          <input id="fFoto" type="file" accept="image/*">
+          <img class="preview" id="preview" alt="Vista previa">
+          <p class="ayuda" id="ayudaFoto" style="margin-top:8px">La foto se reduce y optimiza sola antes de subirse.</p>
+        </div>
+        <div class="campo full" id="bloqueVendido" style="display:none">
+          <label class="check"><input type="checkbox" id="fVendido"> Marcar como vendido</label>
+        </div>
+        <div class="full barra" style="margin-top:6px">
+          <button class="btn btn-rojo" id="btnPublicar" type="submit">Publicar coche</button>
+          <button class="btn btn-borde" id="btnCancelar" type="button" style="display:none">Cancelar edición</button>
+        </div>
+        <div class="full estado" id="estadoForm"></div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>Coches publicados <span id="numCoches" style="color:var(--suave);font-size:.9rem;font-family:'Inter',sans-serif"></span></h2>
+      <p class="sub">Los últimos que subes salen los primeros en la web.</p>
+      <div class="estado" id="estadoLista"></div>
+      <div class="lista" id="lista"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var LS = 'inficars_admin';
+  var $ = function(id){ return document.getElementById(id); };
+  var cfg = null, coches = [], shaCoches = null, editId = null, ocupado = false;
+
+  try { cfg = JSON.parse(localStorage.getItem(LS) || 'null'); } catch(e){ cfg = null; }
+
+  /* ---------- utilidades ---------- */
+  function msg(el, tipo, texto){
+    el.className = (el.classList.contains('full') ? 'full ' : '') + 'estado ' + tipo;
+    el.textContent = texto;
+  }
+  function limpiarMsg(el){ el.className = el.classList.contains('full') ? 'full estado' : 'estado'; el.textContent = ''; }
+  function slug(t){
+    return String(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
+      .replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') || 'coche';
+  }
+  function b64Texto(t){ return bytesB64(new TextEncoder().encode(t)); }
+  function bytesB64(bytes){
+    var s = '', n = 0x8000;
+    for(var i = 0; i < bytes.length; i += n){ s += String.fromCharCode.apply(null, bytes.subarray(i, i + n)); }
+    return btoa(s);
+  }
+  function b64Bytes(b64){
+    var bin = atob(b64), out = new Uint8Array(bin.length);
+    for(var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+  function eur(n){ return Number(n).toLocaleString('es-ES') + ' €'; }
+  function kms(n){ return Number(n).toLocaleString('es-ES') + ' km'; }
+
+  /* ---------- API de GitHub ---------- */
+  function gh(ruta, opts){
+    opts = opts || {};
+    return fetch('https://api.github.com/repos/' + cfg.repo + '/' + ruta, {
+      method: opts.method || 'GET',
+      cache: 'no-store',
+      headers: {
+        'Authorization': 'Bearer ' + cfg.token,
+        'Accept': 'application/vnd.github+json',
+        'Content-Type': 'application/json'
+      },
+      body: opts.body
+    }).then(function(r){
+      if(r.ok) return r.status === 204 ? null : r.json();
+      return r.json().catch(function(){ return {}; }).then(function(j){
+        var e = new Error(traducir(r.status, j.message));
+        e.status = r.status; throw e;
+      });
+    });
+  }
+  function traducir(status, m){
+    if(status === 401) return 'El token no es válido o ha caducado. Vuelve a conectar con uno nuevo.';
+    if(status === 403) return 'GitHub ha rechazado la operación (permisos del token o límite de peticiones). ' + (m || '');
+    if(status === 404) return 'No se encuentra el archivo o el repositorio. Revisa el nombre del repositorio y que el token tenga acceso.';
+    if(status === 409 || status === 422) return 'Conflicto al guardar (alguien cambió algo a la vez). Recarga e inténtalo de nuevo. ' + (m || '');
+    return 'Error de GitHub (' + status + '). ' + (m || '');
+  }
+  function leerCoches(){
+    return gh('contents/coches.js?ref=' + encodeURIComponent(cfg.branch)).then(function(f){
+      shaCoches = f.sha;
+      var txt = new TextDecoder().decode(b64Bytes(f.content));
+      coches = parsear(txt);
+      coches.forEach(function(c){ if(!c.id) c.id = slug(c.marca + '-' + c.modelo + '-' + c.anio + '-' + c.km); });
+    });
+  }
+  function parsear(txt){
+    var i = txt.indexOf('=', txt.indexOf('COCHES'));
+    var a = txt.indexOf('[', i), b = txt.lastIndexOf(']');
+    if(i < 0 || a < 0 || b < 0) throw new Error('No se pudo leer coches.js: el formato no es el esperado.');
+    var s = txt.slice(a, b + 1);
+    try { return JSON.parse(s); }
+    catch(e){ return (new Function('return ' + s))(); }
+  }
+  function serializar(lista){
+    var cab = '/* INFICARS - LISTA DE COCHES\n' +
+              '   Este archivo lo gestiona el panel (admin.html).\n' +
+              '   Si lo editas a mano, respeta el formato. */\n\n';
+    return cab + 'const COCHES = ' + JSON.stringify(lista, null, 2) + ';\n';
+  }
+  function guardarCoches(lista, mensaje){
+    return gh('contents/coches.js', {
+      method: 'PUT',
+      body: JSON.stringify({ message: mensaje, content: b64Texto(serializar(lista)), sha: shaCoches, branch: cfg.branch })
+    }).then(function(r){ shaCoches = r.content.sha; coches = lista; });
+  }
+  function subirFoto(ruta, b64, mensaje){
+    return gh('contents/' + ruta, {
+      method: 'PUT',
+      body: JSON.stringify({ message: mensaje, content: b64, branch: cfg.branch })
+    });
+  }
+  function borrarFoto(ruta){
+    if(!ruta || ruta.indexOf('fotos/') !== 0) return Promise.resolve();
+    return gh('contents/' + ruta + '?ref=' + encodeURIComponent(cfg.branch)).then(function(f){
+      return gh('contents/' + ruta, { method: 'DELETE', body: JSON.stringify({ message: 'Borrar foto', sha: f.sha, branch: cfg.branch }) });
+    }).catch(function(){ /* si no existe, da igual */ });
+  }
+
+  /* ---------- imagen: redimensionar y pasar a JPG ---------- */
+  function procesarImagen(file){
+    return new Promise(function(res, rej){
+      var img = new Image(), url = URL.createObjectURL(file);
+      img.onload = function(){
+        var max = 1280, s = Math.min(1, max / img.width);
+        var c = document.createElement('canvas');
+        c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+        var ctx = c.getContext('2d');
+        ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, c.width, c.height);
+        ctx.drawImage(img, 0, 0, c.width, c.height);
+        c.toBlob(function(b){
+          URL.revokeObjectURL(url);
+          if(!b) return rej(new Error('No se pudo procesar la imagen.'));
+          b.arrayBuffer().then(function(buf){ res(bytesB64(new Uint8Array(buf))); });
+        }, 'image/jpeg', 0.82);
+      };
+      img.onerror = function(){ URL.revokeObjectURL(url); rej(new Error('No se pudo leer la imagen. Prueba con una foto JPG o PNG.')); };
+      img.src = url;
+    });
+  }
+
+  /* ---------- vistas ---------- */
+  function mostrar(){
+    var conectado = !!(cfg && cfg.repo && cfg.token);
+    $('vistaConexion').style.display = conectado ? 'none' : 'block';
+    $('vistaPanel').style.display = conectado ? 'block' : 'none';
+    $('btnSalir').style.display = conectado ? 'inline-block' : 'none';
+    if(conectado){ cargarPanel(); }
+  }
+  function cargarPanel(){
+    limpiarMsg($('estadoLista'));
+    msg($('estadoLista'), 'info', 'Cargando coches...');
+    leerCoches().then(pintarLista).catch(function(e){
+      $('lista').textContent = '';
+      msg($('estadoLista'), 'err', e.message);
+    });
+  }
+
+  function el(tag, props, hijos){
+    var n = document.createElement(tag);
+    Object.keys(props || {}).forEach(function(k){
+      if(k === 'class') n.className = props[k];
+      else if(k === 'text') n.textContent = props[k];
+      else if(k.indexOf('on') === 0) n.addEventListener(k.slice(2), props[k]);
+      else n.setAttribute(k, props[k]);
+    });
+    (hijos || []).forEach(function(h){ if(h) n.appendChild(h); });
+    return n;
+  }
+
+  function pintarLista(){
+    limpiarMsg($('estadoLista'));
+    var cont = $('lista'); cont.textContent = '';
+    $('numCoches').textContent = '(' + coches.length + ')';
+    if(!coches.length){ msg($('estadoLista'), 'info', 'Todavía no hay coches. Añade el primero con el formulario de arriba.'); return; }
+    coches.forEach(function(c){
+      var thumb = el('img', { class: 'mini', alt: '', src: c.foto || '' });
+      thumb.addEventListener('error', function(){ thumb.style.visibility = 'hidden'; });
+      var titulo = el('h3', { text: c.marca + ' ' + c.modelo }, c.vendido ? [el('span', { class: 'etq', text: 'VENDIDO' })] : []);
+      var meta = el('div', { class: 'meta', text: c.anio + '  |  ' + kms(c.km) + '  |  ' + eur(c.precio) + '  |  ' + c.combustible });
+      var botones = el('div', { class: 'botones' }, [
+        el('button', { class: 'btn btn-borde', type: 'button', text: 'Editar', onclick: function(){ editar(c.id); } }),
+        el('button', { class: 'btn btn-borde', type: 'button', text: c.vendido ? 'Marcar disponible' : 'Marcar vendido', onclick: function(){ alternarVendido(c.id); } }),
+        el('button', { class: 'btn btn-borde peligro', type: 'button', text: 'Eliminar', onclick: function(){ eliminar(c.id); } })
+      ]);
+      cont.appendChild(el('div', { class: 'fila' }, [thumb, el('div', {}, [titulo, meta]), botones]));
+    });
+  }
+
+  /* ---------- formulario ---------- */
+  function limpiarForm(){
+    $('formCoche').reset(); editId = null;
+    $('tituloForm').textContent = 'Añadir un coche';
+    $('btnPublicar').textContent = 'Publicar coche';
+    $('btnCancelar').style.display = 'none';
+    $('bloqueVendido').style.display = 'none';
+    $('preview').style.display = 'none';
+    $('ayudaFoto').textContent = 'La foto se reduce y optimiza sola antes de subirse.';
+  }
+  function editar(id){
+    var c = coches.filter(function(x){ return x.id === id; })[0]; if(!c) return;
+    editId = id;
+    $('fMarca').value = c.marca; $('fModelo').value = c.modelo; $('fAnio').value = c.anio;
+    $('fKm').value = c.km; $('fPrecio').value = c.precio; $('fPot').value = c.potencia;
+    $('fComb').value = c.combustible; $('fCambio').value = c.cambio;
+    $('fVendido').checked = !!c.vendido; $('bloqueVendido').style.display = 'block';
+    $('fFoto').value = ''; $('preview').style.display = 'none';
+    $('ayudaFoto').textContent = 'Deja la foto vacía para mantener la actual, o elige otra para sustituirla.';
+    $('tituloForm').textContent = 'Editar coche';
+    $('btnPublicar').textContent = 'Guardar cambios';
+    $('btnCancelar').style.display = 'inline-block';
+    limpiarMsg($('estadoForm'));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  $('btnCancelar').addEventListener('click', function(){ limpiarForm(); limpiarMsg($('estadoForm')); });
+  $('fFoto').addEventListener('change', function(){
+    var f = this.files && this.files[0], p = $('preview');
+    if(!f){ p.style.display = 'none'; return; }
+    p.src = URL.createObjectURL(f); p.style.display = 'block';
+  });
+
+  function bloquear(si){
+    ocupado = si;
+    var b = document.querySelectorAll('#vistaPanel button, #formCoche input, #formCoche select');
+    for(var i = 0; i < b.length; i++) b[i].disabled = si;
+  }
+
+  $('formCoche').addEventListener('submit', function(ev){
+    ev.preventDefault();
+    if(ocupado) return;
+    var est = $('estadoForm'), file = $('fFoto').files[0];
+    var datos = {
+      marca: $('fMarca').value.trim(), modelo: $('fModelo').value.trim(),
+      anio: parseInt($('fAnio').value, 10), km: parseInt($('fKm').value, 10), precio: parseInt($('fPrecio').value, 10),
+      combustible: $('fComb').value, cambio: $('fCambio').value, potencia: $('fPot').value.trim()
+    };
+    if(!datos.marca || !datos.modelo || isNaN(datos.anio) || isNaN(datos.km) || isNaN(datos.precio)){
+      msg(est, 'err', 'Revisa los campos: año, kilómetros y precio deben ser números.'); return;
+    }
+    if(!editId && !file){
+      if(!confirm('No has elegido foto. El coche saldrá con "Foto próximamente". ¿Continuar?')) return;
+    }
+    bloquear(true);
+    msg(est, 'info', 'Publicando... no cierres esta página.');
+    var fotoNueva = null, fotoVieja = null;
+    leerCoches().then(function(){
+      if(!file) return null;
+      msg(est, 'info', 'Subiendo la foto...');
+      return procesarImagen(file).then(function(b64){
+        fotoNueva = 'fotos/' + slug(datos.marca + '-' + datos.modelo) + '-' + Date.now().toString(36) + '.jpg';
+        return subirFoto(fotoNueva, b64, 'Foto de ' + datos.marca + ' ' + datos.modelo);
+      });
+    }).then(function(){
+      msg(est, 'info', 'Guardando los datos...');
+      var lista = coches.slice(), nombre = datos.marca + ' ' + datos.modelo;
+      if(editId){
+        var i = lista.findIndex(function(x){ return x.id === editId; });
+        if(i < 0) throw new Error('Ese coche ya no existe en la lista. Recarga la página.');
+        var antes = lista[i]; fotoVieja = antes.foto;
+        lista[i] = Object.assign({}, antes, datos, { vendido: $('fVendido').checked, foto: fotoNueva || antes.foto });
+        return guardarCoches(lista, 'Editar ' + nombre);
+      }
+      var nuevo = Object.assign({ id: slug(nombre) + '-' + Date.now().toString(36) }, datos, { foto: fotoNueva || '', vendido: false });
+      lista.unshift(nuevo);
+      return guardarCoches(lista, 'Añadir ' + nombre);
+    }).then(function(){
+      var eraEdicion = !!editId;
+      var limpieza = (fotoNueva && fotoVieja && fotoVieja !== fotoNueva) ? borrarFoto(fotoVieja) : Promise.resolve();
+      return limpieza.then(function(){
+        limpiarForm(); pintarLista();
+        msg(est, 'ok', (eraEdicion ? 'Cambios guardados.' : 'Coche publicado.') + ' La web se actualizará en uno o dos minutos.');
+      });
+    }).catch(function(e){
+      msg(est, 'err', e.message);
+    }).then(function(){ bloquear(false); });
+  });
+
+  /* ---------- acciones de la lista ---------- */
+  function accionLista(texto, fn){
+    if(ocupado) return;
+    bloquear(true); msg($('estadoLista'), 'info', texto);
+    leerCoches().then(fn).then(function(){
+      pintarLista();
+      msg($('estadoLista'), 'ok', 'Hecho. La web se actualizará en uno o dos minutos.');
+    }).catch(function(e){ msg($('estadoLista'), 'err', e.message); })
+      .then(function(){ bloquear(false); });
+  }
+  function alternarVendido(id){
+    accionLista('Guardando...', function(){
+      var lista = coches.map(function(c){ return c.id === id ? Object.assign({}, c, { vendido: !c.vendido }) : c; });
+      return guardarCoches(lista, 'Cambiar estado de venta');
+    });
+  }
+  function eliminar(id){
+    var c = coches.filter(function(x){ return x.id === id; })[0]; if(!c) return;
+    if(!confirm('¿Eliminar ' + c.marca + ' ' + c.modelo + '? Esto no se puede deshacer.')) return;
+    accionLista('Eliminando...', function(){
+      var objetivo = coches.filter(function(x){ return x.id === id; })[0];
+      var lista = coches.filter(function(x){ return x.id !== id; });
+      if(editId === id) limpiarForm();
+      return guardarCoches(lista, 'Eliminar ' + c.marca + ' ' + c.modelo).then(function(){
+        var compartida = lista.some(function(x){ return x.foto === objetivo.foto; });
+        return compartida ? null : borrarFoto(objetivo.foto);
+      });
+    });
+  }
+
+  /* ---------- conexión ---------- */
+  $('btnConectar').addEventListener('click', function(){
+    var repo = $('cRepo').value.trim().replace(/^https?:\/\/github\.com\//,'').replace(/\.git$/,'').replace(/\/+$/,'');
+    var rama = $('cRama').value.trim() || 'main', token = $('cToken').value.trim();
+    var est = $('estadoConexion');
+    if(!/^[\w.-]+\/[\w.-]+$/.test(repo)){ msg(est, 'err', 'Escribe el repositorio como usuario/nombre, por ejemplo tuusuario/inficars.'); return; }
+    if(!token){ msg(est, 'err', 'Pega tu token de acceso.'); return; }
+    cfg = { repo: repo, branch: rama, token: token };
+    msg(est, 'info', 'Comprobando la conexión...');
+    leerCoches().then(function(){
+      try { localStorage.setItem(LS, JSON.stringify(cfg)); } catch(e){}
+      $('cToken').value = '';
+      limpiarMsg(est); mostrar();
+    }).catch(function(e){ cfg = null; msg(est, 'err', e.message); });
+  });
+  $('btnSalir').addEventListener('click', function(){
+    if(!confirm('¿Salir? Tendrás que volver a pegar el token para entrar.')) return;
+    try { localStorage.removeItem(LS); } catch(e){}
+    cfg = null; coches = []; limpiarForm(); mostrar();
+  });
+
+  if(cfg){ $('cRepo').value = cfg.repo || ''; $('cRama').value = cfg.branch || 'main'; }
+  mostrar();
+})();
+</script>
+</body>
+</html>
