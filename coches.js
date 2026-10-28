@@ -4,6 +4,19 @@
 
 const COCHES = [
   {
+    "id": "opel-granland-mvryvu78",
+    "marca": "opel",
+    "modelo": "granland",
+    "anio": 2021,
+    "km": 151000,
+    "precio": 12500,
+    "combustible": "Gasolina",
+    "cambio": "Manual",
+    "potencia": "130cv",
+    "foto": "fotos/opel-granland-mvryvsgf.jpg",
+    "vendido": false
+  },
+  {
     "marca": "BMW",
     "modelo": "Serie 3 320d",
     "anio": 2019,
