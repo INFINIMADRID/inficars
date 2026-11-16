@@ -28,18 +28,5 @@ const COCHES = [
     "potencia": "374",
     "foto": "fotos/bmw-m4-m4-40i-xdrive-cabrio-mwjlrh5s.jpg",
     "vendido": false
-  },
-  {
-    "id": "opel-granland-mvryvu78",
-    "marca": "opel",
-    "modelo": "granland",
-    "anio": 2021,
-    "km": 151000,
-    "precio": 12500,
-    "combustible": "Gasolina",
-    "cambio": "Manual",
-    "potencia": "130cv",
-    "foto": "fotos/opel-granland-mvryvsgf.jpg",
-    "vendido": false
   }
 ];
