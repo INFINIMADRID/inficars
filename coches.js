@@ -15,18 +15,5 @@ const COCHES = [
     "potencia": "130cv",
     "foto": "fotos/opel-granland-mvryvsgf.jpg",
     "vendido": false
-  },
-  {
-    "marca": "Tesla",
-    "modelo": "Model 3 Long Range",
-    "anio": 2022,
-    "km": 35000,
-    "precio": 36900,
-    "combustible": "Eléctrico",
-    "cambio": "Automático",
-    "potencia": "351 CV",
-    "foto": "fotos/tesla-model3.jpg",
-    "vendido": false,
-    "id": "tesla-model-3-long-range-2022-35000"
   }
 ];
