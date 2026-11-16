@@ -19,7 +19,7 @@ const COCHES = [
   {
     "id": "bmw-m4-m4-40i-xdrive-cabrio-mwjlrihx",
     "marca": "BMW M4",
-    "modelo": "M4 40i xDRIVE CABRIO",
+    "modelo": "M440i xDRIVE CABRIO",
     "anio": 2023,
     "km": 16000,
     "precio": 66000,
