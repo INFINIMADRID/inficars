@@ -21,11 +21,11 @@ const COCHES = [
     "marca": "BMW M4",
     "modelo": "M4 40i xDRIVE CABRIO",
     "anio": 2023,
-    "km": 16,
+    "km": 16000,
     "precio": 66000,
     "combustible": "Híbrido",
     "cambio": "Automático",
-    "potencia": "374",
+    "potencia": "374 cv",
     "foto": "fotos/bmw-m4-m4-40i-xdrive-cabrio-mwjlrh5s.jpg",
     "vendido": false
   }
