@@ -12,7 +12,7 @@ const COCHES = [
     "precio": 46000,
     "combustible": "Diésel",
     "cambio": "Automático",
-    "potencia": "204",
+    "potencia": "204 cv",
     "foto": "fotos/audi-q5-40-tdi-quattro-black-line-edition-mwjluxlk.jpg",
     "vendido": false
   },
