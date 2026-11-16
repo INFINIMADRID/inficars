@@ -17,19 +17,6 @@ const COCHES = [
     "vendido": false
   },
   {
-    "marca": "BMW",
-    "modelo": "Serie 3 320d",
-    "anio": 2019,
-    "km": 78000,
-    "precio": 24900,
-    "combustible": "Diésel",
-    "cambio": "Automático",
-    "potencia": "190 CV",
-    "foto": "fotos/bmw-320d.jpg",
-    "vendido": true,
-    "id": "bmw-serie-3-320d-2019-78000"
-  },
-  {
     "marca": "Tesla",
     "modelo": "Model 3 Long Range",
     "anio": 2022,
